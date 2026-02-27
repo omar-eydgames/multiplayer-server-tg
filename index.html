@@ -1,0 +1,103 @@
+<!--const ws = new WebSocket("wss://multiplayer-server-tg.onrender.com");
+
+ws.onopen = () => {
+  console.log("Conectado!");
+  ws.send(JSON.stringify({ type: "move", x: 10, y: 20 }));
+};
+
+ws.onmessage = (msg) => {
+  console.log("Recebido:", msg.data);
+};
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Teste WebSocket Multiplayer</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 50px;
+    }
+    button {
+      padding: 10px;
+      margin: 5px;
+    }
+    #log {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 200px;
+      overflow-y: auto;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Teste Servidor Multiplayer</h1>
+
+  <button onclick="connect()">Conectar</button>
+  <button onclick="move()">Mover</button>
+  <button onclick="attack()">Atacar</button>
+
+  <div id="log"></div>
+
+  <script>
+    let ws;
+
+    function log(message) {
+      const logDiv = document.getElementById("log");
+      logDiv.innerHTML += message + "<br>";
+      logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+    function connect() {
+      ws = new WebSocket("wss://multiplayer-server-tg.onrender.com");
+
+      ws.onopen = () => {
+        log("✅ Conectado ao servidor!");
+      };
+
+      ws.onmessage = (event) => {
+        log("📩 Recebido: " + event.data);
+      };
+
+      ws.onclose = () => {
+        log("❌ Conexão fechada.");
+      };
+
+      ws.onerror = (error) => {
+        log("⚠️ Erro: " + error);
+      };
+    }
+
+    function move() {
+      if (!ws) return alert("Conecte primeiro!");
+
+      const data = {
+        type: "move",
+        x: Math.floor(Math.random() * 100),
+        y: Math.floor(Math.random() * 100)
+      };
+
+      ws.send(JSON.stringify(data));
+      log("➡️ Movimento enviado");
+    }
+
+    function attack() {
+      if (!ws) return alert("Conecte primeiro!");
+
+      const data = {
+        type: "attack",
+        targetId: "123" // coloque um id real para funcionar
+      };
+
+      ws.send(JSON.stringify(data));
+      log("⚔️ Ataque enviado");
+    }
+  </script>
+
+</body>
+</html>
