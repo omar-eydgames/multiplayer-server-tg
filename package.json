@@ -2,10 +2,10 @@
   "name": "multiplayer-server-tg",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts" {
+  "scripts": {
     "start": "node index.js"
   },
-  "dependencies" : {
+  "dependencies": {
     "ws": "^8.13.0"
   }
 }
